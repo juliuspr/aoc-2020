@@ -14,9 +14,9 @@ let requiredFields = ['byr', 'iyr','eyr','hgt','hcl','ecl','pid'];
 
 const validatePassport = (passport) => {   
     for (let field of requiredFields) {
-        if(!passport[field]) return false
+        if(!passport[field]) return false;
     }
-    return true
+    return true;
 }
 
 console.log('Part 1: ', passports.filter(validatePassport).length);
@@ -44,14 +44,13 @@ const validateHEX = (field) => (passport) => (passport[field] && passport[field]
     
 const validateHeight = (field, { conditions })  => {
     return (passport) => {
-        if (!passport[field]) return false
+        if (!passport[field]) return false;
 
         for (let condition of conditions) {
-            let regex = new RegExp(`([0-9]+)(in|cm)`)
-            let {0: result, 1: number, 2: unit} = passport[field].match(regex) || {};
-            let inRange = (parseInt(number) >= condition.min && parseInt(number) <= condition.max)
+            let {0: result, 1: number, 2: unit} = passport[field].match(/([0-9]+)(in|cm)/);
+            let inRange = (parseInt(number) >= condition.min && parseInt(number) <= condition.max);
             
-            if(unit === condition.unit && inRange) return true
+            if(unit === condition.unit && inRange) return true;
         }
         return false;
     }
@@ -79,7 +78,7 @@ let composed = composePredicates(
     validateLength('pid', { length: 9 })
     );
 
-let result = passports.filter(composed)
+let result = passports.filter(composed);
 
 let result2 = passports
     .filter(validateLength('byr',{length: 4}))
@@ -91,7 +90,7 @@ let result2 = passports
     .filter(validateHeight('hgt', { conditions: [{unit: 'cm', min: 150, max: 193}, {unit: 'in', min: 59, max: 76}] }  ))
     .filter(validateHEX('hcl'))
     .filter(validateIsIn('ecl', {arr: "amb blu brn gry grn hzl oth".split(' ') }))
-    .filter(validateLength('pid', {length: 9}))
+    .filter(validateLength('pid', {length: 9}));
 
 console.log('Passports total: ', passports.length);
 console.log('Part 2: ', result.length, result2.length);
