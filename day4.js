@@ -36,7 +36,6 @@ const validateInRange = (field, { min, max }) => {
     }
 }
 
-
 const validateIsIn = (field, { arr }) => {
     return (passport) => arr.filter((item) => passport[field] === item).length === 1 ? true : false
 }
@@ -57,7 +56,6 @@ const validateHeight = (field, { conditions })  => {
     }
 }
 
-
 let composePredicates = (...predicates) => {
     return (passport) => {
         for (let predicate of predicates) {
@@ -66,6 +64,7 @@ let composePredicates = (...predicates) => {
         return true;
     }
 }
+
 let composed = composePredicates(
     validateLength('byr',{ length: 4 }),
     validateInRange('byr', { min: 1920, max: 2002 }),
