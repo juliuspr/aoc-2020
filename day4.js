@@ -39,6 +39,7 @@ const validateInRange = (field, { min, max }) => {
 const validateIsIn = (field, { arr }) => {
     return (passport) => arr.filter((item) => passport[field] === item).length === 1 ? true : false
 }
+
 const validateHEX = (field) => (passport) => (passport[field] && passport[field].match(/#([0-9 a-f])\w+/g))
     
 const validateHeight = (field, { conditions })  => {
