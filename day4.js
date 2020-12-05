@@ -36,6 +36,7 @@ const validateInRange = (field, { min, max }) => {
     }
 }
 
+
 const validateIsIn = (field, { arr }) => {
     return (passport) => arr.filter((item) => passport[field] === item).length === 1 ? true : false
 }
@@ -44,20 +45,43 @@ const validateHEX = (field) => (passport) => (passport[field] && passport[field]
 const validateHeight = (field, { conditions })  => {
     return (passport) => {
         if (!passport[field]) return false
-        let isValid = false
 
         for (let condition of conditions) {
             let regex = new RegExp(`([0-9]+)(in|cm)`)
             let {0: result, 1: number, 2: unit} = passport[field].match(regex) || {};
             let inRange = (parseInt(number) >= condition.min && parseInt(number) <= condition.max)
             
-            if(unit === condition.unit && inRange) isValid = true
+            if(unit === condition.unit && inRange) return true
         }
-        return isValid
+        return false;
     }
 }
 
-let result = passports
+
+let composePredicates = (...predicates) => {
+    return (passport) => {
+        for (let predicate of predicates) {
+            if (!predicate(passport)) return false;
+        }    
+        return true;
+    }
+}
+let composed = composePredicates(
+    validateLength('byr',{ length: 4 }),
+    validateInRange('byr', { min: 1920, max: 2002 }),
+    validateLength('iyr',{ length: 4}),
+    validateInRange('iyr', { min: 2010, max: 2020 }),
+    validateLength('eyr',{ length: 4 }),
+    validateInRange('eyr', { min: 2020, max: 2030 }),
+    validateHeight('hgt', { conditions: [{unit: 'cm', min: 150, max: 193}, {unit: 'in', min: 59, max: 76}] }),
+    validateHEX('hcl'),
+    validateIsIn('ecl', { arr: "amb blu brn gry grn hzl oth".split(' ') }),
+    validateLength('pid', { length: 9 })
+    );
+
+let result = passports.filter(composed)
+
+let result2 = passports
     .filter(validateLength('byr',{length: 4}))
     .filter(validateInRange('byr', {min: 1920, max: 2002}))
     .filter(validateLength('iyr',{length: 4}))
@@ -70,4 +94,4 @@ let result = passports
     .filter(validateLength('pid', {length: 9}))
 
 console.log('Passports total: ', passports.length);
-console.log('Part 2: ', result.length);
+console.log('Part 2: ', result.length, result2.length);
