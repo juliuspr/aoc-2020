@@ -59,5 +59,4 @@ let seatToBinary = (boardingPass) => {
 let idx = seats.map(seatToBinary).sort((a,b) => b-a)
 
 console.log('Part 1: ', idx[0])
-
 console.log('Part 2: ', idx.filter( (id) => !idx.includes(id+1) )[1] + 1)
