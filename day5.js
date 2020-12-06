@@ -1,5 +1,23 @@
 // let data = 'INPUT DATA'
 
+
+// SOLUTION 2
+
+let seatToBinary = (boardingPass) => {
+    let binary = boardingPass
+        .split('')
+        .map( char => (char === 'F' || char === 'L') ? 0 : 1 )
+        .join('')
+    
+    return parseInt(binary, 2)
+}
+
+let idx = seats.map(seatToBinary).sort((a,b) => b-a)
+
+console.log('Part 1: ', idx[0])
+console.log('Part 2: ', idx.filter( (id) => !idx.includes(id+1) )[1] + 1)
+
+
 // SOLUTION 1
 
 const findRow = (input) => {
@@ -44,19 +62,3 @@ for (let i = 0; i < ids.length; i++) {
 }
 
 console.log('Part 2: ', seatsWithoutOneNeighboor)
-
-// SOLUTION 2
-
-let seatToBinary = (boardingPass) => {
-    let binary = boardingPass
-        .split('')
-        .map( char => (char === 'F' || char === 'L') ? 0 : 1 )
-        .join('')
-
-    return parseInt(binary, 2)
-}
-
-let idx = seats.map(seatToBinary).sort((a,b) => b-a)
-
-console.log('Part 1: ', idx[0])
-console.log('Part 2: ', idx.filter( (id) => !idx.includes(id+1) )[1] + 1)
