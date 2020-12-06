@@ -1,6 +1,5 @@
 // let data = 'INPUT DATA'
 
-
 // SOLUTION 2
 
 let seatToBinary = (boardingPass) => {
