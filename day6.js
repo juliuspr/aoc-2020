@@ -1,13 +1,10 @@
 // let data = 'INPUT DATA'
 
-let groups = data.split('\n\n')
-
-let uniqueAnswersPerGroup = groups.map((group) => new Set(group.split('\n').map(person => person.split('')).flat()).size) 
-
-let totalAnswers = uniqueAnswersPerGroup.reduce((acc, current) => acc + current, 0)
-
-console.log('Part 1: ', totalAnswers)
-
+function solveA(data) {
+    return data.split('\n\n')
+                .map((group) => new Set(group.split('\n').map(person => person.split('')).flat()).size)
+                .reduce((acc, current) => acc + current, 0)
+}
 
 let sharedAnswerCountPerGroup = (group) => {
     let stats = new Map(),
@@ -25,6 +22,11 @@ let sharedAnswerCountPerGroup = (group) => {
     return sharedAnswers
 }
 
-let result2 = groups.map((group) => sharedAnswerCountPerGroup(group).length).reduce((acc, curr) => acc + curr, 0)
+function solveB(data) {
+    return data.split('\n\n')
+                .map((group) => sharedAnswerCountPerGroup(group).length)
+                .reduce((acc, curr) => acc + curr, 0)
+}
 
-console.log('Part 2: ', result2)
+console.log('Part 1: ', solveA(data))
+console.log('Part 2: ', solveB(data))
