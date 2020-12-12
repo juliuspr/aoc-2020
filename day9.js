@@ -1,6 +1,6 @@
-// let data = `INPUT DATA`
+// let data = `INPUT DATA`;
 
-let nums = data.split('\n').map(n => parseInt(n))
+let nums = data.split('\n').map(n => parseInt(n));
 
 function isNumInArraySum(num, array) {
     for (let i = 0; i < array.length; i++) {
@@ -29,11 +29,11 @@ console.log('Part 1: ', invalidNumber);
 function findContiguousSet(nums, target) {
     for (let windowSize = 2; windowSize < nums.length; windowSize++) {
         for (let i = 0; i < nums.length; i++) {
-            let range = nums.slice(i, i + windowSize)
-            let rangeSum = range.reduce((acc, num) => acc + num, 0)
+            let range = nums.slice(i, i + windowSize);
+            let rangeSum = range.reduce((acc, num) => acc + num, 0);
 
-            let sortedRange = range.sort((a,b) => a-b)
-            if (rangeSum === target) return sortedRange[0] + sortedRange[sortedRange.length-1]
+            let sortedRange = range.sort((a,b) => a-b);
+            if (rangeSum === target) return sortedRange[0] + sortedRange[sortedRange.length-1];
         } 
     }
 }
