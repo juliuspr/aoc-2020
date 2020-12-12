@@ -26,23 +26,16 @@ function findFirstInvalidNumber(nums) {
 let invalidNumber = findFirstInvalidNumber(nums);
 console.log('Part 1: ', invalidNumber);
 
-// function findContiguousSet(nums, target) {
-//     let stats = {
-//         start: 0,
-//         end: 1,
-//         sum: nums[0] + nums[1]
-//     };
+function findContiguousSet(nums, target) {
+    for (let windowSize = 2; windowSize < nums.length; windowSize++) {
+        for (let i = 0; i < nums.length; i++) {
+            let range = nums.slice(i, i + windowSize)
+            let rangeSum = range.reduce((acc, num) => acc + num, 0)
 
-//     for (let i = 2; i < nums.length; i++) {
-//         if (stats.sum === target) return nums[stats.start] + nums[stats.end];
-        
-//         // check different "stats-window" sizes
+            let sortedRange = range.sort((a,b) => a-b)
+            if (rangeSum === target) return sortedRange[0] + sortedRange[sortedRange.length-1]
+        } 
+    }
+}
 
-//         stats.sum += nums[i];
-//         stats.end = i
-//         console.log(stats)
-//     }
-//     return 
-// }
-
-// console.log('Part 2: ', findContiguousSet(nums, invalidNumber));
+console.log('Part 2: ', findContiguousSet(nums, invalidNumber));
